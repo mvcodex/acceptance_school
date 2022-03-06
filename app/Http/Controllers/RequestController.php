@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\RequestService;
+use App\Http\Requests\RequestValidation;
 
 class RequestController extends Controller
 {
@@ -12,9 +13,11 @@ class RequestController extends Controller
     {
         $this->service = $service;
     }
-    public function getRequests(){
-
-        return $this->service->getRequests(null, null);
+    public function getRequests(RequestValidation $request){
+        
+        $query = $request->all();
+        
+        return $this->service->getRequests($query["initialDate"],$query["finalDate"]);
 
     }
 
