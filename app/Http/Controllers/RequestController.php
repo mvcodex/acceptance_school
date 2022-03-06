@@ -22,7 +22,10 @@ class RequestController extends Controller
 
     }
 
-    public function createRequest(){
+    public function createRequest(Request $request){
+
+        $data = $request->all();
+        return $this->service->createRequest($data);
 
     }
 

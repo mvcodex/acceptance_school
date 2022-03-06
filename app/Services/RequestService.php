@@ -33,4 +33,11 @@ class RequestService{
 
         });
     }
+
+    public function createRequest($date){
+
+       $request = Request::create($date);
+       return $request;
+
+    }
 }
