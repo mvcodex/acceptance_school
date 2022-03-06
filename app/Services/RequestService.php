@@ -15,4 +15,14 @@ class RequestService{
         return $requests;
     }
 
+    public function deleteRequest($idRequest){
+
+        DB::transaction(function() use($idRequest){
+            
+            Request::where('idInteressado', $idRequest)->delete();
+
+        });
+
+    }
+
 }
