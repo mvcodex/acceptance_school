@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\RequestService;
 
-class InteressadoController extends Controller
+class RequestController extends Controller
 {
+
+    public function __construct(RequestService $service)
+    {
+        $this->service = $service;
+    }
     public function getRequests(){
 
+        return $this->service->getRequests(null, null);
 
-        dd("Hello world Laravel");
     }
 
     public function createRequest(){

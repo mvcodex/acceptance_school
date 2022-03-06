@@ -10,6 +10,8 @@ class Request extends Model
     use HasFactory;
 
     protected $table = 'interessado';
+
+    protected $connection = 'mysql';
     protected $attributes = [
         'idInteressado',
         'idEntidade',
@@ -34,6 +36,10 @@ class Request extends Model
         'idOrigemInteressado',
 
     ];
+
+    protected $dates = ['dtCadastro',
+    ];
+
 
     public function sex(){
         return $this->belongsTo(Sex::class, 'idSexo', 'idSexo');
