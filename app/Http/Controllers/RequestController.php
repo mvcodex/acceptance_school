@@ -26,7 +26,13 @@ class RequestController extends Controller
 
     }
 
-    public function updateRequest(){
+    public function updateRequest($id, Request $request){
+        
+        $data = $request->all();
+       
+        $this->service->updateRequest($id, $data);
+
+        return response()->json("Request updated succesfully", 200);
 
     }
 

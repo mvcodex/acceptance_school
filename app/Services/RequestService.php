@@ -18,11 +18,19 @@ class RequestService{
     public function deleteRequest($idRequest){
 
         DB::transaction(function() use($idRequest){
-            
+
             Request::where('idInteressado', $idRequest)->delete();
 
         });
 
     }
 
+    public function updateRequest($idRequest , $date){
+
+        DB::transaction(function() use($idRequest, $date){
+            
+            Request::where('idInteressado', $idRequest)->update($date);
+
+        });
+    }
 }
