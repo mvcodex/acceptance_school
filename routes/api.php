@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Route::prefix('admin')->controller(AuthController::class)->group(function () {
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+   /* Route::middleware('auth:acceptance_school_api')->group(function () {
+        Route::post('logout', 'logout');
+        Route::post('me', 'me');
+    });*/
+//});
+
 Route::get('/requests', [RequestController::class, 'getRequests']);
 Route::post('/requests', [RequestController::class, 'createRequest']);
 Route::put('/requests/{id}', [RequestController::class, 'updateRequest']);
 Route::delete('/requests/{id}', [RequestController::class, 'deleteRequest']);
+
+Route::group(['middleware' => 'auth.jwt'], function () {
+
+    Route::post('logout', [JWTAuthController::class, 'logout']);
+
+});
 
