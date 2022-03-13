@@ -24,20 +24,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-   /* Route::middleware('auth:acceptance_school_api')->group(function () {
-        Route::post('logout', 'logout');
-        Route::post('me', 'me');
-    });*/
+    Route::middleware('auth:acceptance_school_api')->group(function () {
+        Route::post('logout',[AuthController::class, 'logout']);
+        Route::get('requests', [RequestController::class, 'getRequests']);
+        Route::post('requests', [RequestController::class, 'createRequest']);
+        Route::put('requests/{id}', [RequestController::class, 'updateRequest']);
+        Route::delete('requests/{id}', [RequestController::class, 'deleteRequest']);
+        //Route::post('me', 'me');
+    });
 //});
 
-Route::get('/requests', [RequestController::class, 'getRequests']);
-Route::post('/requests', [RequestController::class, 'createRequest']);
-Route::put('/requests/{id}', [RequestController::class, 'updateRequest']);
-Route::delete('/requests/{id}', [RequestController::class, 'deleteRequest']);
+//Route::get('/requests', [RequestController::class, 'getRequests']);
+//Route::post('/requests', [RequestController::class, 'createRequest']);
+//Route::put('/requests/{id}', [RequestController::class, 'updateRequest']);
+//Route::delete('/requests/{id}', [RequestController::class, 'deleteRequest']);
 
-Route::group(['middleware' => 'auth.jwt'], function () {
+//Route::group(['middleware' => 'auth.jwt'], function () {
 
-    Route::post('logout', [JWTAuthController::class, 'logout']);
+ //   Route::post('logout', [JWTAuthController::class, 'logout']);
 
-});
+//});
 
