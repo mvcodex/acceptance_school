@@ -14,10 +14,10 @@ class RequestController extends Controller
     {
         $this->service = $service;
     }
-    public function getRequests(RequestGetValidation $request){
+    public function getRequests(Request $request){
         
         $query = $request->all();
-        
+
         return $this->service->getRequests($query["initialDate"],$query["finalDate"]);
 
     }
@@ -30,9 +30,9 @@ class RequestController extends Controller
     }
 
     public function updateRequest($id, Request $request){
-        
+
         $data = $request->all();
-       
+
         $this->service->updateRequest($id, $data);
 
         return response()->json("Request updated succesfully", 200);
@@ -40,7 +40,7 @@ class RequestController extends Controller
     }
 
     public function deleteRequest($id){
-        
+
         $this->service->deleteRequest($id);
 
         return response()->json("Request deleted succesfully", 200);
