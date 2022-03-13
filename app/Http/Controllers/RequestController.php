@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\RequestService;
 use App\Http\Requests\RequestValidation;
 use App\Http\Requests\RequestGetValidation;
+use Illuminate\Support\Facades\Validator;
 
 class RequestController extends Controller
 {
@@ -15,7 +16,21 @@ class RequestController extends Controller
         $this->service = $service;
     }
     public function getRequests(Request $request){
-        
+
+
+
+        $validator = Validator::make($request->all(), [
+            'initialDate' => 'required',
+            'finalDate' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => 'Please, inform the parameters'
+            ], 403);
+        }
+
         $query = $request->all();
 
         return $this->service->getRequests($query["initialDate"],$query["finalDate"]);
@@ -33,7 +48,10 @@ class RequestController extends Controller
 
         $data = $request->all();
 
-        $this->service->updateRequest($id, $data);
+        $response = $this->service->updateRequest($id, $data);
+        if($response == -1){
+            return response()->json("Request not found", 404);
+        }
 
         return response()->json("Request updated succesfully", 200);
 

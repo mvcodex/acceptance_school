@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\DB;
 class RequestService{
     public function getRequests($initialDate, $finalDate){
 
-       
+
         $requests = Request::whereDate('dtCadastro', '>=', date($initialDate))->whereDate(
             'dtCadastro', '<=', date($finalDate))->groupBy(['idUniao','idAssociacao', 'idEntidade'])->get();
-       
+
 
         return $requests;
     }
@@ -27,9 +27,15 @@ class RequestService{
 
     public function updateRequest($idRequest , $date){
 
-        DB::transaction(function() use($idRequest, $date){
-            
-            Request::where('idInteressado', $idRequest)->update($date);
+        $request = Request::where('idInteressado', $idRequest)->get();
+
+        if($request->isEmpty()){
+            return -1;
+        }
+
+        DB::transaction(function() use($request, $date){
+
+            $request->update($date);
 
         });
     }
